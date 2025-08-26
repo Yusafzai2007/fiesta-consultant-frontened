@@ -1,0 +1,101 @@
+<ng-container *ngIf="isloader">
+  <div class="p-4 mt-20 grid">
+            <h1 class="font-bold text-xl ">Users</h1>
+
+    <div *ngIf="paginatedUsers.length > 0; else noData">
+      <div>
+      </div>
+      <table class="min-w-[360px] bg-white border border-slate-300 rounded shadow-sm text-sm">
+        <thead class="bg-slate-800 text-white">
+          <tr>
+            <th class="py-2 px-4 border-b">ID</th>
+            <th class="py-2 px-4 border-b">Name</th>
+            <th class="py-2 px-4 border-b">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of paginatedUsers; let i = index" class="hover:bg-slate-100 transition">
+            <!-- ✅ Global ID using pagination -->
+            <td class="py-2 px-4 border-b text-slate-700">
+              {{ (currentPage - 1) * itemsPerPage + i + 1 }}
+            </td>
+            <td class="py-2 text-center border-b text-slate-800">{{ user.name }}</td>
+            <td class="py-2 text-center border-b text-slate-600">{{ user.email }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Pagination Controls -->
+      <div class="flex flex-col md:flex-row  items-center gap-4 mt-4">
+        <div class="flex items-center gap-3">
+          <button (click)="prevPage()" [disabled]="currentPage === 1"
+                  class="px-4 py-1 bg-slate-200 rounded hover:bg-slate-300 disabled:opacity-50">
+            Previous
+          </button>
+
+          <span class="text-slate-800 font-semibold">
+            Page {{ currentPage }} of {{ totalPages }}
+          </span>
+
+          <button (click)="nextPage()" [disabled]="currentPage === totalPages"
+                  class="px-4 py-1 bg-slate-200 rounded hover:bg-slate-300 disabled:opacity-50">
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noData>
+      <p class="text-slate-500 text-sm mt-4">No users found.</p>
+    </ng-template>
+  </div>
+</ng-container>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Skeleton Loader -->
+<ng-container *ngIf="!isloader">
+  <div class="p-4 place-content-center grid text-xs">
+    <div class="max-h-[600px] overflow-y-auto rounded-xl">
+      <table class="min-w-full text-left text-[#273F4F] bg-white dark:bg-gray-900 border !border-slate-300 dark:!border-slate-200">
+        <thead class="text-[11px] uppercase bg-slate-800 text-white tracking-wider">
+          <tr>
+            <th class="px-3 py-3">ID</th>
+            <th class="px-3 py-3">Name</th>
+            <th class="px-3 py-3">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let skeleton of skeletonArray" class="animate-pulse border-b !border-slate-300">
+            <td class="px-3 py-3">
+              <div class="w-6 h-3 bg-gray-300 rounded"></div>
+            </td>
+            <td class="px-3 py-3">
+              <div class="flex items-center gap-2">
+                <div class="space-y-1">
+                  <div class="w-24 h-3 bg-gray-300 rounded"></div>
+                </div>
+              </div>
+            </td>
+            <td class="px-3 py-3">
+              <div class="w-32 h-3 bg-gray-300 rounded"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-container>

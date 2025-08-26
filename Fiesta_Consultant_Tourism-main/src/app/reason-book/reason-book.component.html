@@ -1,0 +1,46 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="md:pt-[180px] pt-[130px]"> <!-- Navbar ka height ka space -->
+    <div class="md:flex text-center place-content-center md:space-y-0 space-y-3 md:space-x-4">
+      <div class="flex justify-center">
+        <div class="relative bg-[#004030]  text-white px-4 py-2 text-center font-semibold w-64 h-24 items-center place-content-center">
+          <p class="text-2xl">REASON TO BOOK WITH US</p>
+          <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-full border-y-[10px] border-y-transparent border-l-[10px] border-l-[#004030] "></div>
+        </div>
+      </div>
+      <div class="grid place-content-center">
+        <div class="md:w-[60vw] w-[90vw] space-y-3">
+          <div *ngFor="let feature of features" class="col-md-12 text-center mt-5">
+            <i class="fa fa-4x" [ngClass]="[feature.icon, feature.color]"></i>
+            <h4 class="calibri text-slate-500">{{ feature.title }}</h4>
+            <p class="text-justify calibri font-15 text-slate-400 italic">{{ description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+
+
+
+
+
+  

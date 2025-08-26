@@ -1,0 +1,195 @@
+<form [formGroup]="AddproductForm">
+  <div class="flex justify-center">
+    <div class="space-y-12 w-[90vw] lg:w-[70vw] md:w-[80vw] sm:w-[70vw] mt-5">
+
+      <!-- Section: Product Info -->
+      <div class="border-b border-slate-200 pb-12 ">
+        <h2 class="text-lg font-semibold text-sky-700">Product Information</h2>
+        <p class="mt-1 text-sm text-slate-500">This information will be displayed publicly so be careful what you share.</p>
+
+        <!-- Product Title -->
+        <div class="col-span-full mt-3">
+          <label for="producttitle" class="block text-sm font-medium text-slate-700">Product title</label>
+          <input type="text" formControlName="producttitle" id="producttitle" autocomplete="producttitle"
+            class="mt-2 block w-full rounded-md bg-slate-50 px-3 py-2 text-base text-slate-800 outline outline-1 -outline-offset-1 outline-slate-300 placeholder:text-slate-400 focus:outline-2 focus:outline-sky-500 sm:text-sm" />
+        </div>
+
+        <!-- Product Description -->
+        <div class="col-span-full mt-3">
+          <label for="productdescription" class="block text-sm font-medium text-slate-700">Description</label>
+          <textarea formControlName="productdescription" id="productdescription" rows="3"
+            class="mt-2 block w-full rounded-md bg-slate-50 px-3 py-2 text-base text-slate-800 outline outline-1 -outline-offset-1 outline-slate-300 placeholder:text-slate-400 focus:outline-2 focus:outline-sky-500 sm:text-sm"></textarea>
+        </div>
+
+        <!-- Product Images Upload -->
+        <div class="col-span-full mt-4">
+          <label for="thumbnail" class="block text-sm font-medium text-slate-700">Product images</label>
+          <div class="mt-2 flex justify-center rounded-lg border border-dashed border-sky-300 px-6 py-10 bg-sky-50 text-center">
+            <div>
+              <svg class="mx-auto size-12 text-sky-300" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" d="M1.5 6a2.25...Z" clip-rule="evenodd" />
+              </svg>
+              <div class="mt-4 flex text-sm text-slate-600">
+                <label for="thumbnail" class="relative cursor-pointer rounded-md bg-white font-semibold text-sky-600 hover:text-sky-500">
+                  <span>Upload a file</span>
+                  <input multiple (change)="onThumbnailChange($event)" id="thumbnail" name="thumbnail" type="file" class="sr-only" />
+                </label>
+                <p class="pl-1">or drag and drop</p>
+              </div>
+              <p class="text-xs text-sky-500">PNG, JPG, GIF up to 10MB</p>
+              <div class="mt-2" *ngIf="thumbnailFiles.length > 0">
+                <p class="text-sm text-sky-700 font-medium">Selected Images:</p>
+                <ul class="text-sm text-sky-600 list-disc list-inside">
+                  <li *ngFor="let file of thumbnailFiles">{{ file }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Input Fields Grid -->
+        <div class="grid grid-cols-2 gap-4 mt-4">
+          <div *ngFor="let field of ['tourService', 'duration', 'transportService', 'pickUp', 'translatelanguage', 'wifi', 'adultBaseprice', 'kidsBaseprice', 'quantity', 'discountend']">
+            <label [for]="field" class="block text-sm font-medium text-slate-700 capitalize">{{ field }}</label>
+          <input [formControlName]="field" [id]="field" [name]="field"
+  [type]="field === 'discountend' ? 'date' : 'text'" 
+  class="mt-2 block w-full rounded-md bg-slate-50 px-3 py-2 text-base text-slate-800 outline outline-1 outline-slate-300 placeholder:text-slate-400 focus:outline-2 focus:outline-sky-500 sm:text-sm" />
+
+          </div>
+
+          <!-- Discount Percentage -->
+          <div>
+            <label for="discountPercentage" value="0" class="block text-sm font-medium text-slate-700">Discount %</label>
+            <input formControlName="discountPercentage" id="discountPercentage" type="number"
+              class="mt-2 block w-full rounded-md bg-slate-50 px-3 py-2 text-base text-slate-800 outline outline-1 outline-slate-300 placeholder:text-slate-400 focus:outline-2 focus:outline-sky-500 sm:text-sm" />
+          </div>
+
+          <!-- Discounted Total (Auto Calculated) -->
+          <div>
+            <label for="discountedTotal" class="block text-sm font-medium text-slate-700">Discounted Total</label>
+            <input formControlName="discountedTotal" id="discountedTotal" type="text" readonly
+              class="mt-2 block w-full rounded-md bg-gray-100 px-3 py-2 text-base text-slate-800 outline outline-1 outline-slate-300 placeholder:text-slate-400 focus:outline-none sm:text-sm" />
+          </div>
+
+          <!-- Remaining Fields -->
+         <!-- Private Transfer Toggle and Inputs in Grid -->
+<div class="grid grid-cols-2 gap-4 mt-4">
+
+  <!-- Private Checkbox -->
+  <div>
+    <label for="private" class="block text-sm font-medium text-slate-700">Private Transfer</label>
+    <select id="private" formControlName="private"
+      class="mt-2 block w-full rounded-md bg-slate-50 px-3 py-2 text-base text-slate-800 outline outline-1 outline-slate-300 focus:outline-2 focus:outline-sky-500 sm:text-sm">
+      <option [ngValue]="false">False</option>
+      <option [ngValue]="true">True</option>
+    </select>
+  </div>
+
+  <!-- Empty column for alignment -->
+  <div></div>
+
+  <!-- Conditionally show these 3 inputs if Private = true -->
+  <ng-container *ngIf="AddproductForm.get('private')?.value">
+    <!-- Private Adult -->
+    <div>
+      <label for="privateAdult" class="block text-sm font-medium text-slate-700">Private Adult Price</label>
+      <input formControlName="privateAdult" id="privateAdult" type="text"
+        class="mt-2 block w-full rounded-md bg-slate-50 px-3 py-2 text-base text-slate-800 outline outline-1 outline-slate-300 focus:outline-2 focus:outline-sky-500 sm:text-sm" />
+    </div>
+
+    <!-- Private Child -->
+    <div>
+      <label for="privateChild" class="block text-sm font-medium text-slate-700">Private Child Price</label>
+      <input formControlName="privateChild" id="privateChild" type="text"
+        class="mt-2 block w-full rounded-md bg-slate-50 px-3 py-2 text-base text-slate-800 outline outline-1 outline-slate-300 focus:outline-2 focus:outline-sky-500 sm:text-sm" />
+    </div>
+
+    <!-- Private Transfer Person -->
+    <div>
+      <label for="privatetransferprice" class="block text-sm font-medium text-slate-700">privatetransferprice</label>
+      <input formControlName="privatetransferprice" id="privatetransferprice" type="text"
+        class="mt-2 block w-full rounded-md bg-slate-50 px-3 py-2 text-base text-slate-800 outline outline-1 outline-slate-300 focus:outline-2 focus:outline-sky-500 sm:text-sm" />
+    </div>
+
+    <!-- Empty column for layout balance -->
+    <div></div>
+  </ng-container>
+
+</div>
+
+        </div>
+      </div>
+
+      <!-- Section: City Info -->
+      <div class="border-b border-slate-200 pb-12">
+        <h2 class="text-lg font-semibold text-sky-700">City Information</h2>
+
+        <!-- City Name -->
+        <div class="mt-4">
+          <label for="cityName" class="block text-sm font-medium text-slate-700">City Name</label>
+          <input formControlName="cityName" id="cityName" type="text"
+            class="mt-2 block w-full rounded-md bg-slate-50 px-3 py-2 text-base text-slate-800 outline outline-1 outline-slate-300 placeholder:text-slate-400 focus:outline-2 focus:outline-sky-500 sm:text-sm" />
+        </div>
+
+        <!-- City Description -->
+        <div class="mt-4">
+          <label for="citydescription" class="block text-sm font-medium text-slate-700">City Description</label>
+          <textarea formControlName="citydescription" id="citydescription" rows="3"
+            class="mt-2 block w-full rounded-md bg-slate-50 px-3 py-2 text-base text-slate-800 outline outline-1 outline-slate-300 placeholder:text-slate-400 focus:outline-2 focus:outline-sky-500 sm:text-sm"></textarea>
+        </div>
+
+        <!-- City Image -->
+        <div class="mt-4">
+          <label for="cityImage" class="block text-sm font-medium text-slate-700">City Image</label>
+          <div class="mt-2 flex justify-center rounded-lg border border-dashed border-sky-300 px-6 py-10 bg-sky-50 text-center">
+            <div>
+              <svg class="mx-auto size-12 text-sky-300" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" d="M1.5 6a2.25...Z" clip-rule="evenodd" />
+              </svg>
+              <div class="mt-4 flex text-sm text-slate-600">
+                <label for="cityImage" class="relative cursor-pointer rounded-md bg-white font-semibold text-sky-600 hover:text-sky-500">
+                  <span>Upload a file</span>
+                  <input id="cityImage" name="cityImage" type="file" (change)="onCityImageChange($event)" class="sr-only" />
+                </label>
+                <p class="pl-1">or drag and drop</p>
+              </div>
+              <p class="text-xs text-sky-500">PNG, JPG, GIF up to 10MB</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Categorie -->
+        <div class="mt-4">
+          <label for="categorie" class="block text-sm font-medium text-slate-700">Categorie</label>
+          <select formControlName="categorie" id="categorie"
+            class="mt-2 block w-full rounded-md bg-slate-50 py-2 pl-3 pr-8 text-base text-slate-800 outline outline-1 outline-slate-300 focus:outline-2 focus:outline-sky-500 sm:text-sm">
+             <option>Jeep Ride</option>
+                            <option>Camel Ride</option>
+                            <option>Bike Ride</option>    
+                            <option>Boat Ride</option>
+                            <option>New Year Dubai Marina</option>
+                            <option>Arabian Night</option>
+                            <option>Camel Ride</option>
+                            <option>Morning Desert</option>
+                            <option>Jet Ski</option>
+                            <option>Bike Ride</option>
+                            <option>Ski Dubai</option>
+                            <option> Dubai Frame</option>
+                            <option>Dubai Water Parks</option>
+                            <option>Burj Khalifa Tours</option>
+          </select>
+        </div>
+
+        <!-- Buttons -->
+        <div class="mt-6 flex items-center justify-end gap-x-4">
+          <button type="button" class="text-sm font-semibold text-slate-600 hover:text-slate-800 transition">Cancel</button>
+          <button type="button" (click)="Save()"
+            class="rounded-md bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow-md hover:bg-sky-500 transition">
+            Save
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</form>

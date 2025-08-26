@@ -1,0 +1,48 @@
+<body class="">
+  <footer class="text-center bg-slate-50 mt-5">
+    <div class="flex justify-center space-x-4 mb-4">
+      <!-- <a
+        *ngFor="let link of links"
+        class="lg:text-sm text-xs text-gray-600 hover:text-gray-800"
+        [href]="link.url"
+      >
+        {{ link.name }}
+      </a> -->
+    </div>
+    <div class="flex items-center justify-center mb-4 space-x-3">
+      <div *ngFor="let logo of logos">
+        <img [src]="logo.src" [alt]="logo.alt" />
+      </div>
+    </div>
+    <div class="flex justify-center space-x-4 mb-4">
+      <a
+        *ngFor="let link of socialLinks"
+        [class]="link.color"
+        [href]="link.url"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <i [class]="link.icon"></i>
+      </a>
+    </div>
+    <div class="text-sm text-gray-600 mb-3 font-bold">
+      © 2025 Fiesta Travel Tourism
+    </div>
+    <div class="text-xs text-gray-500">
+      Powered by:<span class="text-green-600"
+        >BDT Tourism Guidance Services LLC - Adventure Leisure Tourism</span
+      >
+    </div>
+    <div class="relative">
+      <img
+        alt="Dubai skyline illustration"
+        class="w-full"
+        height="200"
+        src='/assets/footer.png'
+
+        width="1200"
+      />
+  
+    </div>
+  </footer>
+</body>

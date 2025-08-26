@@ -1,0 +1,180 @@
+<div
+  class="relative min-h-screen w-full flex items-center justify-center bg-cover bg-center"
+  style="
+    background-image: url('https://img.freepik.com/free-photo/beautiful-mountains-landscape_23-2150787850.jpg');
+  "
+>
+  <div
+    class="relative z-10 w-[400px] p-8 border border-white/50 rounded-lg backdrop-blur-sm"
+  >
+    <form
+      class="flex flex-col m-4"
+      [formGroup]="signupForm"
+      (ngSubmit)="signup()"
+      autocomplete="off"
+    >
+      <h2 class="text-4xl font-bold text-white mb-[20px] text-center">
+        Sign Up
+      </h2>
+
+      <div class="space-y-3 mt-2">
+        <!-- Username Field -->
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="text"
+            name="username"
+            id="username"
+            formControlName="username"
+            class="block py-2.5 px-0 w-full text-sm text-gray-100 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-100 focus:outline-none focus:ring-0 focus:border-blue-100 peer"
+            placeholder=" "
+            required
+            autocomplete="off"
+          />
+          <label
+            for="username"
+            class="peer-focus:font-medium absolute text-sm text-gray-100 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-100 peer-focus:dark:text-blue-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Username
+          </label>
+          <i
+            class="absolute top-[50%] right-0 transform -translate-y-1/2 text-white text-lg fa fa-user"
+          ></i>
+          <div>
+            <ng-container *ngIf="signupForm.get('username')?.touched">
+              <p
+                *ngIf="signupForm.get('username')?.errors?.['required']"
+                class="font-bold text-red-800"
+              >
+                Please fill the input
+              </p>
+              <p
+                *ngIf="signupForm.get('username')?.errors?.['minlength']"
+                class="font-bold text-red-800"
+              >
+                Min 3 chars required
+              </p>
+            </ng-container>
+          </div>
+        </div>
+
+        <!-- Email Field -->
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            formControlName="email"
+            type="email"
+            name="email"
+            id="email"
+            class="block py-2.5 px-0 w-full text-sm text-gray-100 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-100 focus:outline-none focus:ring-0 focus:border-blue-100 peer"
+            placeholder=" "
+            required
+            autocomplete="off"
+          />
+          <label
+            for="email"
+            class="peer-focus:font-medium absolute text-sm text-gray-100 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Email address
+          </label>
+          <i
+            class="absolute top-[50%] right-0 transform -translate-y-1/2 text-white text-lg fa fa-envelope"
+          ></i>
+          <div>
+            <ng-container *ngIf="signupForm.get('email')?.touched">
+              <p
+                *ngIf="signupForm.get('email')?.errors?.['required']"
+                class="text-red-800 font-bold"
+              >
+                Please fill the input
+              </p>
+              <p
+                *ngIf="signupForm.get('email')?.errors?.['email']"
+                class="text-red-800 font-bold"
+              >
+                Please enter a valid email
+              </p>
+            </ng-container>
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            formControlName="password"
+            [type]="passwordVisible ? 'text' : 'password'"
+            name="password"
+            id="password"
+            class="block py-2.5 px-0 w-full text-sm text-gray-100 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-100 focus:outline-none focus:ring-0 focus:border-blue-100 peer"
+            placeholder=" "
+            required
+            autocomplete="new-password"
+          />
+          <label
+            for="password"
+            class="peer-focus:font-medium absolute text-sm text-gray-100 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Password
+          </label>
+          <i
+            class="absolute top-[50%] right-0 transform -translate-y-1/2 text-white text-lg fa fa-eye cursor-pointer"
+            (click)="togglePasswordVisibility()"
+          ></i>
+          <div>
+            <ng-container *ngIf="signupForm.get('password')?.touched">
+              <p
+                *ngIf="signupForm.get('password')?.errors?.['required']"
+                class="font-bold text-red-800"
+              >
+                Please fill the input
+              </p>
+              <p
+                *ngIf="signupForm.get('password')?.errors?.['minlength']"
+                class="font-bold text-red-800"
+              >
+                Min 6 chars required
+              </p>
+            </ng-container>
+          </div>
+        </div>
+
+        <div
+          class="place-content-center justify-between mt-6 mb-8 text-white flex items-center"
+        >
+          <label for="remember" class="flex items-center">
+            <input
+              type="checkbox"
+              name="remember"
+              id="remember"
+              class="accent-white"
+            />
+            <p class="mx-1">Remember me</p>
+          </label>
+          <a href="#" class="hover:underline">Forgot password?</a>
+        </div>
+
+        <div>
+          <button
+            type="submit"
+            [disabled]="signupForm.invalid"
+            class="hover:bg-white/15 hover:text-white py-1 border-none transition-all w-full mb-2 bg-white text-gray-900 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Sign Up
+          </button>
+
+          <div class="text-center text-white mt-1">
+            <p>
+              Already have an account?
+              <a
+                routerLink="/login"
+                class="text-blue-500 hover:text-blue-700 cursor-pointer"
+                >Login</a
+              >
+            </p>
+            <div *ngIf="errorMessage" class="text-red-400 text-sm mb-3">
+              {{ errorMessage }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

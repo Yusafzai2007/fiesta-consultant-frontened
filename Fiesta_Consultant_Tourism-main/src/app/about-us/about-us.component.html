@@ -1,0 +1,58 @@
+
+z<div>
+    <!-- 🔘 Trigger Buttons -->
+<div class="flex flex-wrap gap-4 mt-6 justify-center ">
+  <button (click)="openModal('onSite')"><img src="https://www.dubaitraveltourism.com/assets/icons/on_site.png" width="70" /></button>
+  <button (click)="openModal('preConference')"><img src="https://www.dubaitraveltourism.com/assets/icons/Conference+icon.png" width="70" /></button>
+  <button (click)="openModal('postConference')"><img src="https://www.dubaitraveltourism.com/assets/icons/download.png" width="70" /></button>
+  <button (click)="openModal('corporate')"><img src="https://www.dubaitraveltourism.com/assets/icons/schedule.png" width="70" /></button>
+  <button (click)="openModal('corporate2')"><img src="https://www.dubaitraveltourism.com/assets/icons/conference2.png" width="70" /></button>
+  <button (click)="openModal('corporate3')"><img src="https://www.dubaitraveltourism.com/assets/icons/brand_icon.png" width="70" /></button>
+</div>
+
+<!-- 🧩 Modal -->
+<div *ngIf="visibleModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white w-[350px] md:w-[450px] rounded shadow-lg relative">
+
+    <!-- 🔺 Header -->
+    <div class="bg-green-800 text-white flex justify-between items-center px-4 py-2 rounded-t">
+      <h2 class="font-bold text-lg">{{ getModalTitle() }}</h2>
+      <button (click)="closeModal()" class="w-7 h-7 flex items-center justify-center border-2 border-white rounded-full font-bold text-white hover:text-gray-300 text-base leading-none">×</button>
+    </div>
+
+    <!-- 📷 Image -->
+    <!-- <div class="flex justify-center mt-3">
+      <img [src]="getModalImage()" alt="icon" width="70" height="70" class="rounded shadow" />
+    </div> -->
+
+    <!-- 📄 Body -->
+    <div class="p-4 text-sm text-gray-700 leading-relaxed">
+      <ng-container *ngIf="getListItems().length > 0; else paragraphBlock">
+        <div *ngFor="let item of getListItems()" class="flex items-center gap-2">
+          <span class="text-green-400 font-bold"><i class="fa-solid fa-check font-bold"></i></span>
+          <p class="hover:text-pink-600 cursor-pointer text-sm italic">{{ item }}</p>
+        </div>
+      </ng-container>
+
+      <ng-template #paragraphBlock>
+        <p class="text-justify whitespace-pre-line">{{ getParagraphText() }}</p>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

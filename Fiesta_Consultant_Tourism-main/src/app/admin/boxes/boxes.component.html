@@ -1,0 +1,77 @@
+
+
+<div class="flex flex-col md:flex-row items-center justify-between px-6 py-4">
+  <h1 class="text-3xl font-bold text-gray-800 mb-4 md:mb-0">Fiesta Travel Tourism</h1>
+
+  <div class="flex items-center gap-2">
+    <label class="text-sm font-medium text-gray-700">Filter by Month:</label>
+    <select
+      [(ngModel)]="selectedMonth"
+      (change)="onMonthChange()"
+      class="border border-gray-300 rounded px-3 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+    >
+      <option value="">All Months</option>
+      <option *ngFor="let month of monthOptions" [value]="month">{{ month }}</option>
+    </select>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-6 py-4">
+  <div
+    *ngFor="let card of cards; let i = index"
+    class="p-4 border border-gray-200 rounded-xl shadow-sm hover:shadow-md bg-white hover:bg-indigo-800 transition-all duration-500 transform hover:scale-105 cursor-pointer group"
+  >
+    <!-- Header -->
+    <div class="flex justify-between items-center">
+      <div>
+        <p class="text-sm text-gray-500 group-hover:text-white">{{ card.title }}</p>
+        <p class="text-2xl font-bold text-gray-900 group-hover:text-white">{{ card.value }}</p>
+      </div>
+      <i
+        class="{{ card.icon }} text-3xl transition-all duration-300 group-hover:text-white"
+        [style.color]="i < 2 ? '#fca5a5' : '#4EE94E'"
+      ></i>
+    </div>
+
+    <hr class="mt-3 border-gray-200 group-hover:border-white">
+
+    <!-- Footer -->
+    <div class="mt-4 flex items-center justify-between">
+      <span
+        class="text-xs font-semibold px-3 py-1 rounded-full transition-all duration-300"
+        [ngClass]="[
+          card.tagBg,
+          card.tagText,
+          'group-hover:bg-white',
+          'group-hover:text-pink-600'
+        ]"
+      >
+        {{ card.tag }}
+      </span>
+
+      <!-- Static SVG chart -->
+      <div class="relative w-24 h-10 overflow-hidden">
+        <svg viewBox="0 0 100 40" class="absolute w-full h-full">
+          <path
+            d="M0,30 C20,10 40,25 60,15 80,25 100,10 100,40 L0,40 Z"
+            [attr.fill]="card.chartColor"
+            fill-opacity="0.6"
+          />
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

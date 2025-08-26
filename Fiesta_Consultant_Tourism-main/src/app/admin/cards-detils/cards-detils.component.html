@@ -1,0 +1,56 @@
+<div class="container mx-auto p-6">
+  <h1 class="text-2xl font-bold text-pink-700 mb-4">Card Details</h1>
+
+  <table class="min-w-full border text-sm text-left text-gray-800 shadow rounded overflow-hidden">
+    <thead class="bg-slate-200 text-slate-700 uppercase text-xs">
+      <tr>
+        <th class="p-2">First Name</th>
+        <th class="p-2">Last Name</th>
+        <th class="p-2">Payment</th>
+        <th class="p-2">State</th>
+        <th class="p-2">Country</th>
+        <th class="p-2">Name on Card</th>
+        <th class="p-2">Card Number</th>
+        <th class="p-2">ZIP</th>
+        <th class="p-2">Expiry</th>
+        <th class="p-2">CVV</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="cardData" class="border-t">
+        <td class="p-2">{{ cardData.first_name }}</td>
+        <td class="p-2">{{ cardData.last_name }}</td>
+        <td class="p-2">{{ cardData.payment_Method }}</td>
+        <td class="p-2">{{ cardData.state }}</td>
+        <td class="p-2">{{ cardData.country }}</td>
+        <td class="p-2">{{ cardData.name_On_Card }}</td>
+        <td class="p-2">**** **** **** {{ cardData.card_Number?.slice(-4) }}</td>
+        <td class="p-2">{{ cardData.zip }}</td>
+        <td class="p-2">{{ cardData.expiry }}</td>
+        <td class="p-2">***</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!cardData && !isLoading && !error" class="mt-4 text-sm text-gray-500">
+    No data found.
+  </div>
+
+  <div *ngIf="isLoading" class="text-center mt-6">
+    <div class="animate-spin h-8 w-8 border-b-2 border-pink-600 mx-auto"></div>
+    <p class="text-pink-700 text-sm mt-2">Loading...</p>
+  </div>
+
+  <div *ngIf="error" class="mt-4 text-sm text-red-500">
+    {{ error }}
+  </div>
+</div>
+
+
+
+
+
+
+
+
+

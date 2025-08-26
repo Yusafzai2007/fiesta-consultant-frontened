@@ -1,0 +1,35 @@
+/* Add smooth transitions for modals */
+.fixed {
+  transition: opacity 0.3s ease;
+}
+
+.bg-opacity-50 {
+  transition: background-color 0.3s ease;
+}
+
+/* Ensure modal content is properly centered */
+.flex.items-center.justify-center {
+  min-height: 100vh;
+}
+
+/* Improve modal scrolling */
+.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: #64748b #1e293b;
+}
+
+.overflow-y-auto::-webkit-scrollbar {
+  width: 8px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background-color: #64748b;
+  border-radius: 4px;
+}
+
+
+

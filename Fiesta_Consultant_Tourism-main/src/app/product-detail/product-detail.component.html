@@ -1,0 +1,367 @@
+<div class="mt-36">
+  <!-- Product Title Section -->
+  <div>
+    <h1 class="lg:text-2xl text-xl font-bold text-center mt-5 text-[rgb(22,101,52)]" *ngIf="productDetails">
+      {{ productDetails.producttitle }}
+    </h1>
+    <div *ngIf="!productDetails && !isloader" class="text-red-500 text-center mt-5">
+      Failed to load product details.
+    </div>
+  </div>
+
+  <!-- Main Product Content -->
+  <div class="flex flex-col lg:flex-row justify-center lg:space-x-6 ">
+    <!-- Product Images Section -->
+    <div class="-mt-1" *ngIf="productDetails?.thumbnail?.length > 0; else noImages">
+      <div class="flex flex-col justify-center">
+        <!-- Main Swiper Gallery -->
+        <div class="mt-2 swiper-container relative overflow-hidden bg-cover mx-auto">
+          <div class="flex justify-center">
+            <div class="lg:w-[40vw] md:w-[95vw]  w-[90vw] md:h-[60vh] max-h-[400px] bg-white mx-auto mt-6">
+              <swiper-container 
+                navigation="true" 
+                loop="true" 
+                style="--swiper-navigation-color:#fff; --swiper-pagination-color: #fff;"
+                class="h-full w-full rounded-lg shadow-lg"
+              >
+                <swiper-slide 
+                  *ngFor="let thumb of productDetails.thumbnail; let i = index" 
+                  class="flex items-center justify-center"
+                >
+                  <div class="relative w-full h-full flex items-center justify-center">
+                    <img
+                      [src]="'http://localhost:4000/uploads/' + thumb"
+                      [alt]="'Product Image ' + (i + 1)"
+                      class=" w-full h-full  rounded-lg"
+                      loading="lazy"
+                    />
+                  </div>
+                </swiper-slide>
+              </swiper-container>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Thumbnail Gallery -->
+        <div class="flex gap-3 mx-auto">
+          <div class="h-20 lg:w-[13vw] md:w-[27vw] bg-cover flex mt-6" 
+               *ngFor="let thumb of productDetails.thumbnail; let i = index">
+            <img
+              [src]="'http://localhost:4000/uploads/' + thumb"
+              [alt]="'Product Image ' + (i + 1)"
+              class="w-full h-full bg-cover rounded-md cursor-pointer"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <ng-template #noImages>
+      <p class="text-center p-4">No images available.</p>
+    </ng-template>
+
+    <!-- Product Details and Booking Section -->
+    <div class="flex justify-center mt-4 py-4 px-5">
+      <div class="md:h-[80%] w-[95vw] lg:w-[36vw] hover:shadow-2xl shadow-xl border-2 border-slate-100 px-1 sm:px-10 py-5">
+        <!-- Product Features -->
+        <div class="flex flex-wrap justify-between text-center">
+          <div class="flex items-center mb-4" *ngFor="let item of button">
+            <i [ngClass]="item.icon"></i>
+            <h1 class="mx-4 font-base text-xs md:text-base">
+              {{ item.label }}
+              <span *ngIf="item.label === 'TourService'">: {{ productDetails.tourService }}</span>
+              <span *ngIf="item.label === 'Duration'">{{ productDetails.duration }} Hour</span>
+              <span *ngIf="item.label === ''">{{ productDetails.transportService }}</span>
+              <span *ngIf="item.label === 'PickUp'">{{ productDetails.pickUp }}</span>
+              <span *ngIf="item.label === 'Lang'">: {{productDetails.translatelanguage}}</span>
+              <span *ngIf="item.label === 'Free'">Wifi Available</span>
+              <span *ngIf="item.label === 'Adult'">
+                <ng-container *ngIf="productDetails.discountPercentage > 0; else showBasePrice">
+                  {{ productDetails.discountedTotal }}
+                </ng-container>
+                <ng-template #showBasePrice>
+                  {{ productDetails.adultBaseprice }}
+                </ng-template>
+              </span>
+              <span *ngIf="item.label === 'Child'">{{ productDetails.kidsBaseprice}}</span>
+            </h1>
+          </div>
+        </div>
+        
+        <hr class="text-slate-500">
+        
+        <!-- Price Display -->
+        <div class="flex justify-between mt-3 items-center flex-wrap gap-2">
+          <ng-container *ngIf="productDetails.discountPercentage > 0; else normalPriceBlock">
+            <div class="w-full flex justify-center">
+              <div class="flex flex-wrap items-center justify-center gap-4 text-sm">
+                <p class="text-xl font-bold text-[#039543] ">
+                  PKR {{ productDetails.discountedTotal || productDetails.adultBaseprice }}
+                </p>
+                <span class="text-pink-600 font-bold">|</span>
+                <p class="line-through text-gray-500 text-xs">
+                  PKR {{ productDetails.adultBaseprice }}
+                </p>
+                <p class="text-red-600 font-bold">
+                  {{ productDetails.discountPercentage }} % OFF
+                </p>
+                <p class="text-[#039543] font-semibold">
+                  Till : {{ productDetails.discountend | date: 'yyyy-MM-dd' }}
+                </p>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-template #normalPriceBlock>
+            <p class="text-sm font-medium text-gray-600">Start From</p>
+            <p class="text-xl font-bold text-pink-600">
+              PKR {{ productDetails.adultBaseprice }}
+            </p>
+          </ng-template>
+        </div>
+        
+        <!-- Book Now Button -->
+        <div>
+          <div *ngIf="!isapi; else loadingTemplate">
+            <button
+              (click)="onBooknow()"
+              type="button"
+             class="bg-gradient-to-r from-green-600 to-green-500 text-white font-semibold py-2 px-24 w-full rounded-lg shadow-lg mt-3 hover:from-green-700 hover:to-green-600 transition duration-150 ease-in-out"
+
+            >
+              Book Now
+            </button>
+          </div>
+
+          <ng-template #loadingTemplate>
+            <div class="flex justify-center items-center">
+              <img
+                src="https://www.dubaitraveltourism.com/assets/images/widget-loader-lg.gif"
+                alt="Loading..."
+                class=""
+              />
+            </div>
+          </ng-template>
+        </div>
+        
+        <!-- Payment Image -->
+        <div class="mt-5 flex justify-center">
+          <img
+            src="https://imagedelivery.net/SwMP4f7rTNZkFOn4O9xPmg/cbe68dcf-dee3-4c33-3275-927ed5d40b00/public"
+            alt="Payment options"
+          />
+        </div>
+        
+        <!-- Booking Form Modal -->
+    <div *ngIf="form" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50 transition-opacity duration-500 opacity-0" [ngClass]="{ 'opacity-100': form }">
+  <div class="bg-white rounded-xl shadow-xl w-full max-w-sm relative pt-14">
+
+    <!-- Green Header on Top -->
+    <div class="absolute top-0 left-0 w-full bg-green-700 text-white text-center py-2 rounded-t-xl">
+      <h2 class="text-2xl font-semibold">Welcome to Pakistan</h2>
+    </div>
+
+    <!-- Close Button -->
+    <button
+      (click)="form = false"
+      class="absolute top-2 right-2 text-white text-2xl font-bold bg-green-700 h-8 w-8 flex justify-center items-center hover:bg-green-700 transition duration-150 ease-in-out"
+      aria-label="Close"
+    >&times;</button>
+
+          <div class="p-5">
+             
+
+            <!-- Shared Transfer Form -->
+            <form *ngIf="!showPrivateForm" class="space-y-4">
+              <div class="mb-4">
+                <label class="text-sm text-black mb-1 block">Select Date</label>
+                <input
+                  [(ngModel)]="userobj.Date"
+                  [min]="minDate"
+                  name="Date"
+                  type="date"
+                  required
+                  class="bg-gray-100 border border-gray-300 rounded-md p-1 w-full"
+                />
+              </div>
+
+              <div class="mb-4">
+                <label class="text-sm text-black mb-1 block">No of Adults</label>
+                <input
+                  [(ngModel)]="userobj.NoofAdult"
+                  (ngModelChange)="onBookNow()"
+                  name="NoofAdult"
+                  type="number"
+                  required
+                  class="bg-gray-100 border border-gray-300 rounded-md p-1 w-full"
+                />
+              </div>
+
+              <div class="mb-4">
+                <label class="text-sm text-black mb-1 block">No of Children</label>
+                <input
+                  [(ngModel)]="userobj.NoofChild"
+                  (ngModelChange)="onBookNow()"
+                  name="NoofChild"
+                  type="number"
+                  required
+                  class="bg-gray-100 border border-gray-300 rounded-md p-1 w-full"
+                />
+              </div>
+
+              <div class="mb-4">
+                <label class="text-sm text-black mb-1 block">Total Bill</label>
+                <div class="border border-slate-300 rounded-md h-10 w-full flex items-center">
+                  <p *ngIf="result !== null" class="mx-4 text-md text-gray-700">PKR: {{ result }}</p>
+                </div>
+              </div>
+
+              <div *ngIf="showError" class="text-sm text-red-600 font-medium mt-2">
+                {{ errorMessage }}
+              </div>
+
+              <div class="mb-4">
+                <label class="text-sm text-black mb-1 block">Transfer Type</label>
+                <div class="border border-slate-300 rounded-md h-10 w-full flex items-center">
+                  <p class="mx-4 text-md text-gray-700">Shared</p>
+                </div>
+              </div>
+
+              <div class="flex justify-between space-x-4">
+                <button
+                  *ngIf="productDetails?.private"
+                  (click)="showPrivateForm = true"
+                  type="button"
+                  class="bg-gradient-to-r from-gray-700 to-gray-600 text-white font-semibold py-2 w-1/2 rounded-lg shadow-lg hover:from-gray-600 hover:to-gray-500"
+                >Private Transfer</button>
+
+                <button
+                  (click)="onsignup()"
+                  type="button"
+                  [disabled]="!userobj.NoofAdult || showError"
+                  [ngClass]="{
+                    'w-full': !productDetails?.private,
+                    'w-1/2': productDetails?.private
+                  }"
+       class="bg-gradient-to-r from-green-600 to-green-500 text-white font-semibold py-2 rounded-lg shadow-lg hover:from-green-700 hover:to-green-600 disabled:opacity-50"
+
+                >
+                  Book Now
+                </button>
+              </div>
+            </form>
+
+            <!-- Private Transfer Form -->
+            <form *ngIf="showPrivateForm && productDetails?.private" class="space-y-4">
+              <div class="mb-4">
+                <label class="text-sm text-black mb-1 block">Select Date</label>
+                <input
+                  [(ngModel)]="userobj.Date"
+                  [min]="minDate"
+                  name="privateDate"
+                  type="date"
+                  required
+                  class="bg-gray-100 border border-gray-300 rounded-md p-1 w-full"
+                />
+              </div>
+
+              <div class="mb-4">
+                <label class="text-sm text-black mb-1 block">No of Adults</label>
+                <input
+                  [(ngModel)]="userobj.privateAdult"
+                  name="privateAdult"
+                  type="number"
+                  [readonly]="true"
+                  class="bg-gray-100 border border-gray-300 rounded-md p-1 w-full text-gray-500"
+                />
+              </div>
+
+              <div class="mb-4">
+                <label class="text-sm text-black mb-1 block">No of Children</label>
+                <input
+                  [(ngModel)]="userobj.privateChild"
+                  name="privateChild"
+                  type="number"
+                  [readonly]="true"
+                  class="bg-gray-100 border border-gray-300 rounded-md p-1 w-full text-gray-500"
+                />
+              </div>
+
+              <div class="mb-4">
+                <label class="text-sm text-black mb-1 block">Private Transfer Price</label>
+                <div class="border border-slate-300 rounded-md h-10 w-full flex items-center">
+                  <p class="mx-4 text-md text-gray-700">PKR: {{ productDetails?.privatetransferprice }}</p>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label class="text-sm text-black mb-1 block">Transfer Type</label>
+                <div class="border border-slate-300 rounded-md h-10 w-full flex items-center">
+                  <p class="mx-4 text-md text-gray-700">Private</p>
+                </div>
+              </div>
+
+              <div class="flex justify-between space-x-4">
+                <button
+                  (click)="showPrivateForm = false"
+                  type="button"
+                  class="bg-gradient-to-r from-gray-700 to-gray-600 text-white font-semibold py-2 w-1/2 rounded-lg shadow-lg hover:from-gray-600 hover:to-gray-500"
+                >Back</button>
+
+                <button
+                  (click)="onPrivateBookNow()"
+                  type="button"
+                  [disabled]="!userobj.Date"
+                  class="bg-gradient-to-r from-green-600 to-green-500 text-white font-semibold py-2 w-1/2 rounded-lg shadow-lg disabled:opacity-50"
+                >Book Now</button>
+              </div>
+            </form>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+
+  <router-outlet></router-outlet>
+
+ <!-- Product Description Section -->
+<div class="container mx-auto px-4 py-6">
+  <div class="flex flex-col lg:flex-row gap-6">
+    <!-- Main Content Section - Takes full width on mobile, 3/4 on desktop -->
+    <div class="lg:w-3/4 bg-white p-6 shadow-lg rounded-lg">
+      <h1 class="text-2xl font-bold text-[#004030] mb-4">{{productDetails.producttitle}}</h1>
+      
+      <p class="text-gray-700 mb-4 text-justify" [ngClass]="{'line-clamp-5': !showMore}">
+        {{ productDetails.productdescription }}
+      </p>
+      <button
+        (click)="showMore = !showMore"
+        class="bg-[#004030] text-white px-4 py-2 rounded hover:bg-[#4A9782] transition"
+      >
+        {{ showMore ? 'Read less...' : 'Read more...' }}
+      </button>
+    </div>
+
+    <!-- Sidebar Section - Full width on mobile, 1/4 on desktop -->
+    <div class="lg:w-1/4 bg-white p-4 shadow-lg rounded-lg">
+      <h2 class="text-xl font-bold text-gray-800 mb-4 text-center lg:text-left text-[#004030]">Why Book With Us?</h2>
+      
+      <div class="flex flex-col space-y-2">
+        <a
+          *ngFor="let feature of features"
+          [routerLink]="feature.route"
+          class="flex items-center p-1 hover:bg-gray-100 transition rounded"
+        >
+          <i [class]="feature.icon + ' text-xl p-2'"></i>
+          <p class="text-gray-700 font-bold text-sm">
+            {{ feature.text }}
+          </p>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <router-outlet></router-outlet>
+</div>

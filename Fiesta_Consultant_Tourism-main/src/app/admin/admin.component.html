@@ -1,0 +1,28 @@
+<div class="mt-56">
+    Lorem ipsum dolor sit amet...
+</div>
+
+<div class="p-4">
+  <h1 class="text-2xl font-bold text-pink-800 mb-4">Admin Panel - Users</h1>
+
+  <div *ngIf="usersData && usersData.length > 0; else noData">
+    <table class="min-w-full bg-white border border-gray-300">
+      <thead class="bg-pink-800 text-white">
+        <tr>
+          <th class="py-2 px-4 border-b">Name</th>
+          <th class="py-2 px-4 border-b">Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of usersData">
+          <td class="py-2 px-4 border-b">{{ user.name }}</td>
+          <td class="py-2 px-4 border-b">{{ user.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #noData>
+    <p class="text-gray-500">No users found.</p>
+  </ng-template>
+</div>

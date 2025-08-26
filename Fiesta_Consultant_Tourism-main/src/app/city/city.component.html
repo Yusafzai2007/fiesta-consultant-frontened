@@ -1,0 +1,68 @@
+
+
+
+<div class="mt-5">
+    <div class="flex space-x-4 justify-center items-center">
+      <div class="mt-1">
+        <i class="fa-solid fa-bullhorn text-xl text-[rgb(9,87,63)]"></i>
+        <h1 class="border-b-2 border-[rgb(9,87,63)]"></h1>
+      </div>
+  
+      <div>
+        <h1 class="font-bold text-2xl text-[rgb(9,87,63)]">Most Popular - Activities</h1>
+      </div>
+    </div>
+  </div>
+  
+
+
+<ng-container *ngIf="isloader">
+  <div class="flex w-full flex-wrap items-center justify-center gap-4 p-4">
+    <div *ngFor="let skeleton of skeletonArray" class="relative border-2 border-white w-96 h-96 sm:w-60 sm:h-60 md:w-72 md:h-72 rounded-lg overflow-hidden">
+
+      <!-- Main Skeleton -->
+      <ngx-skeleton-loader 
+        appearance="line" 
+        [theme]="{ height: '100%', 'border-radius': '0.5rem' }" 
+        [count]="1" 
+        class="w-full h-full">
+      </ngx-skeleton-loader>
+
+      <!-- Dark Overlay at bottom like city name area -->
+      <!-- <div class="absolute bottom-0 w-full h-12 bg-black bg-opacity-40"></div> -->
+
+      <!-- Fake Text Skeleton for city.name -->
+      <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-1/2 h-4 bg-gray-400 rounded animate-pulse"></div>
+    </div>
+  </div>
+</ng-container>
+
+
+
+<ng-container *ngIf="!isloader">
+  <div class="flex w-full flex-wrap items-center justify-center gap-4 p-4" id="card12">
+    <div *ngFor="let city of cities" class="border-2 border-white w-96 h-96 sm:w-60 sm:h-60 md:w-72 md:h-72 relative group flex-shrink-0">
+      <a [routerLink]="'/city'" [queryParams]="{ cityName: city?.cityName }" class="relative block overflow-hidden rounded-lg h-full w-full object-contain">
+        <!-- Image -->
+        <img [src]="city.imageUrl" alt="City Image" class="w-full h-full rounded-lg cursor-pointer">
+
+        <!-- Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-0 group-hover:opacity-80 transition-opacity duration-300 rounded-lg"></div>
+
+        <!-- Text -->
+        <h1 class="absolute bottom-8 text-nowrap left-1/2 transform -translate-x-1/2 translate-y-full group-hover:translate-y-0 group-hover:top-1/2 text-white text-xl font-bold transition-all duration-300 ease-in-out">
+          {{ city.name }}
+        </h1>
+      </a>
+    </div>
+  </div>
+</ng-container>
+
+
+
+
+
+
+
+
+

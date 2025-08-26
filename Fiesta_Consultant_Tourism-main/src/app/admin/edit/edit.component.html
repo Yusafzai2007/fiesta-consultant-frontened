@@ -1,0 +1,327 @@
+<div class="max-w-6xl mx-auto p-4 sm:p-6 bg-white rounded-lg shadow-lg">
+  <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-6 border-b pb-3 sm:pb-4">Edit Product</h1>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded-lg shadow-sm">
+    <div class="flex items-center">
+      <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+      </svg>
+      <p class="font-medium">{{ errorMessage }}</p>
+    </div>
+  </div>
+
+  <form (ngSubmit)="updateProduct()" class="space-y-6 sm:space-y-8">
+    <!-- Basic Information Section -->
+    <div class="bg-gray-50 p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100">
+      <h2 class="text-lg sm:text-xl font-semibold text-gray-700 mb-3 sm:mb-4 pb-2 border-b">Basic Information</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <div>
+          <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2">Product Title*</label>
+          <input [(ngModel)]="productData.producttitle" name="producttitle" type="text" required
+                 class="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+        </div>
+
+        <div>
+          <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2">City Name*</label>
+          <input [(ngModel)]="productData.cityName" name="cityName" type="text" required
+                 class="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+        </div>
+
+        <div>
+          <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2">Category*</label>
+          <input [(ngModel)]="productData.categorie" name="categorie" type="text" required
+                 class="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+        </div>
+
+        <div>
+          <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2">Language*</label>
+          <input [(ngModel)]="productData.translatelanguage" name="translatelanguage" type="text" required
+                 class="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+        </div>
+      </div>
+    </div>
+
+    <!-- Descriptions Section -->
+    <div class="bg-gray-50 p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100">
+      <h2 class="text-lg sm:text-xl font-semibold text-gray-700 mb-3 sm:mb-4 pb-2 border-b">Descriptions</h2>
+      
+      <div class="mb-4 sm:mb-6">
+        <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2">Product Description*</label>
+        <textarea [(ngModel)]="productData.citydescription" name="citydescription" rows="4" required
+                  class="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"></textarea>
+      </div>
+
+      <div>
+        <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2"> City Description*</label>
+        <textarea [(ngModel)]="productData.productdescription" name="productdescription" rows="4" required
+                  class="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"></textarea>
+      </div>
+    </div>
+
+    <!-- Tour Details Section -->
+    <div class="bg-gray-50 p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100">
+      <h2 class="text-lg sm:text-xl font-semibold text-gray-700 mb-3 sm:mb-4 pb-2 border-b">Tour Details</h2>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div>
+          <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2">Duration*</label>
+          <input [(ngModel)]="productData.duration" name="duration" type="text" required
+                 class="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+        </div>
+
+        <div>
+          <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2">Pick Up*</label>
+          <input [(ngModel)]="productData.pickUp" name="pickUp" type="text" required
+                 class="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+        </div>
+
+        <div>
+          <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2">Quantity*</label>
+          <input [(ngModel)]="productData.quantity" name="quantity" type="number" min="0" required
+                 class="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+        </div>
+
+        <div>
+          <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2">Tour Service*</label>
+          <input [(ngModel)]="productData.tourService" name="tourService" type="text" required
+                 class="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+        </div>
+
+        <div>
+          <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2">Transport Service*</label>
+          <input [(ngModel)]="productData.transportService" name="transportService" type="text" required
+                 class="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+        </div>
+
+        <div>
+          <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2">Wifi*</label>
+          <input [(ngModel)]="productData.wifi" name="wifi" type="text" required
+                 class="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+        </div>
+      </div>
+    </div>
+
+    <!-- Pricing Section -->
+    <div class="bg-gray-50 p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100">
+      <h2 class="text-lg sm:text-xl font-semibold text-gray-700 mb-3 sm:mb-4 pb-2 border-b">Pricing Information</h2>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div>
+          <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2">Adult Base Price*</label>
+          <div class="relative">
+            <!-- <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">AED</span> -->
+            <input [(ngModel)]="productData.adultBaseprice" name="adultBaseprice" type="number" min="0" step="0.01" required
+                   (ngModelChange)="handleFieldChange('adultBaseprice')"
+                   class="w-full pl-10 pr-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2">Kids Base Price*</label>
+          <div class="relative">
+            <!-- <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">AED</span> -->
+            <input [(ngModel)]="productData.kidsBaseprice" name="kidsBaseprice" type="number" min="0" step="0.01" required
+                   class="w-full pl-10 pr-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2">Discount %*</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">%</span>
+            <input [(ngModel)]="productData.discountPercentage" name="discountPercentage" type="number" min="0" max="100" required
+                   (ngModelChange)="handleFieldChange('discountPercentage')"
+                   class="w-full pr-10 pl-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2">Discounted Total*</label>
+          <div class="relative">
+            <!-- <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">AED</span> -->
+            <input [(ngModel)]="productData.discountedTotal" name="discountedTotal" type="number" min="0" readonly
+                   class="w-full pl-10 pr-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2">Discount End Date*</label>
+          <input [(ngModel)]="productData.discountend" name="discountend" type="date" required
+                 class="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+        </div>
+      </div>
+    </div>
+
+    <!-- Tour Type Section -->
+    <div class="bg-gray-50 p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100">
+      <h2 class="text-lg sm:text-xl font-semibold text-gray-700 mb-3 sm:mb-4 pb-2 border-b">Tour Type</h2>
+      
+      <div class="flex flex-wrap gap-4 sm:gap-6">
+        <label class="flex items-center space-x-2 sm:space-x-3 cursor-pointer">
+          <div class="relative">
+            <input type="checkbox" [(ngModel)]="productData.private" name="private" 
+                   class="sr-only peer">
+            <div class="w-10 h-5 sm:w-11 sm:h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 sm:after:h-5 sm:after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+          </div>
+          <span class="text-sm sm:text-base text-gray-700 font-medium">Private Tour</span>
+        </label>
+        
+        <!-- <label class="flex items-center space-x-2 sm:space-x-3 cursor-pointer">
+          <div class="relative">
+            <input type="checkbox" [(ngModel)]="productData.shared" name="shared" 
+                   class="sr-only peer">
+            <div class="w-10 h-5 sm:w-11 sm:h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 sm:after:h-5 sm:after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+          </div>
+          <span class="text-sm sm:text-base text-gray-700 font-medium">Shared Tour</span>
+        </label> -->
+      </div>
+
+      <!-- Private Tour Fields -->
+      <div *ngIf="productData.private" class="mt-4 sm:mt-6 pl-4 sm:pl-6 border-l-4 border-blue-200 space-y-4">
+        <h3 class="text-base sm:text-lg font-medium text-gray-700">Private Tour Pricing</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+          <div>
+            <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2">Private Adult Price*</label>
+            <div class="relative">
+              <!-- <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">AED</span> -->
+              <input [(ngModel)]="productData.privateAdult" name="privateAdult" type="number" min="0" step="0.01"
+                     class="w-full pl-10 pr-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2">Private Child Price</label>
+            <div class="relative">
+              <!-- <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">AED</span> -->
+              <input [(ngModel)]="productData.privateChild" name="privateChild" type="number" min="0" step="0.01"
+                     class="w-full pl-10 pr-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-sm sm:text-base text-gray-700 font-medium mb-1 sm:mb-2"> Private Transfer Price</label>
+            <div class="relative flex items-center space-x-3">
+              <!-- <span class="absolute text-xs flex items-center pl-3 text-gray-500">AED</span> -->
+              <input [(ngModel)]="productData.privatetransferprice" name="privatetransferprice" type="number" min="0" step="0.01"
+                     class="w-full pl-14  pr-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   <!-- Images Section -->
+<div class="bg-gray-50 p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100">
+  <h2 class="text-lg sm:text-xl font-semibold text-gray-700 mb-3 sm:mb-4 pb-2 border-b">Images</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- City Image -->
+    <div>
+      <label class="block text-sm sm:text-base text-gray-700 font-medium mb-2 sm:mb-3">City Image*</label>
+
+      <div *ngIf="productData.cityImage" class="mb-3 sm:mb-4">
+        <div class="relative group">
+          <img [src]="'http://localhost:4000/uploads/' + productData.cityImage" 
+               class="max-w-full max-h-64 mx-auto object-contain rounded-lg border border-gray-300 shadow-sm group-hover:opacity-90 transition duration-200">
+
+          <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-200">
+            <span class="text-white font-medium text-sm sm:text-base">Current Image</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-center w-full">
+        <label class="flex flex-col items-center justify-center w-full h-28 sm:h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition duration-200">
+          <div class="flex flex-col items-center justify-center pt-5 pb-6 px-2">
+            <svg class="w-6 sm:w-8 h-6 sm:h-8 mb-2 sm:mb-4 text-gray-500" fill="none" viewBox="0 0 20 16">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+            </svg>
+            <p class="mb-1 text-xs sm:text-sm text-gray-500 text-center"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+            <p class="text-xxs sm:text-xs text-gray-500">PNG, JPG (MAX. 5MB)</p>
+          </div>
+          <input type="file" (change)="onCityImageChange($event)" class="hidden">
+        </label>
+      </div>
+    </div>
+
+    <!-- Thumbnails -->
+    <div>
+      <label class="block text-sm sm:text-base text-gray-700 font-medium mb-2 sm:mb-3">Thumbnails*</label>
+
+      <div class="flex flex-wrap gap-3 mb-3 sm:mb-4">
+        <div *ngFor="let thumb of productData.thumbnail; let i = index" class="relative group">
+          <div class="w-28 h-20 flex items-center justify-center bg-white border border-gray-300 rounded-lg overflow-hidden shadow-sm group-hover:opacity-80 transition duration-200">
+            <img [src]="'http://localhost:4000/uploads/' + thumb" class="max-w-full max-h-full object-contain" />
+          </div>
+          <button type="button" (click)="removeExistingThumbnail(i)"
+                  class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-xs sm:text-sm shadow-md hover:bg-red-600 transition duration-200 opacity-0 group-hover:opacity-100">
+            ×
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-center w-full">
+        <label class="flex flex-col items-center justify-center w-full h-28 sm:h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition duration-200">
+          <div class="flex flex-col items-center justify-center pt-5 pb-6 px-2">
+            <svg class="w-6 sm:w-8 h-6 sm:h-8 mb-2 sm:mb-4 text-gray-500" fill="none" viewBox="0 0 20 16">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+            </svg>
+            <p class="mb-1 text-xs sm:text-sm text-gray-500 text-center"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+            <p class="text-xxs sm:text-xs text-gray-500">PNG, JPG (MAX. 5MB each)</p>
+          </div>
+          <input type="file" (change)="onThumbnailChange($event)" multiple class="hidden">
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Submit Button -->
+    <div class="flex justify-end pt-4 sm:pt-6">
+      <button type="submit" [disabled]="loading"
+              class="px-6 sm:px-8 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg shadow-md hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200
+                     disabled:opacity-70 disabled:cursor-not-allowed disabled:bg-blue-600 flex items-center">
+        <svg *ngIf="loading" class="animate-spin -ml-1 mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span class="text-sm sm:text-base">{{ loading ? 'Updating...' : 'Update Product' }}</span>
+      </button>
+    </div>
+  </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

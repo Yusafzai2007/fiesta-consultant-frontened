@@ -1,0 +1,162 @@
+<header class="bg-white fixed top-0 mx-auto  w-full  left:0 right-0 z-50">
+  <div class="container mx-auto flex flex-wrap text-center lg:w-[90vw]  lg:justify-between md:justify-around justify-around items-center py-3 mx-auto ">
+    <div class="flex items-center ">
+      <div class="cursor-pointer ">
+     <div class="w-16 lg:left-12 left:0">
+         <img routerLink="/main"
+             alt="Dubai Travel & Tourism Logo"
+             class="w-full h-full object-contain"
+             height=""
+             src='/assets/image.png'
+             width="150" />
+     </div>
+      </div>
+      <div class="ml-2 md:block hidden">
+        <div class="flex items-center space-x-2 cursor-pointer">
+          <i class="fa-solid fa-phone rotate-45 text-xs text-[rgb(18,121,6)]"></i>
+          <p class="text-[rgb(18,121,6)] font-bold text-xs sm:text-sm mt-1 hover:text-indigo-950" (click)="openWhatsApp1()">+92 302 6062955</p>
+        </div>
+        <div class="flex items-center space-x-2 cursor-pointer" (click)="openWhatsApp()">
+          <i class="fa-brands fa-whatsapp text-[rgb(18,121,6)] text-lg"></i>
+          <p class="text-[rgb(18,121,6)] font-bold text-sm sm:text-sm hover:text-indigo-950">+92 3019307229</p>
+        </div>
+      </div>
+
+      <div class="items-center space-x-4 sm:mt-0 hidden md:block">
+        <div class="flex items-center space-x-2 mx-4">
+          <i class="fa-solid fa-envelope text-[rgb(18,121,6)]"></i>
+          <a class="text-[rgb(18,121,6)] hover:text-indigo-950 font-bold text-sm sm:text-sm"
+             [href]="'https://mail.google.com/mail/?view=cm&fs=1&to=' + email" target="_blank">{{email}}</a>
+        </div>
+        <div class="flex items-center space-x-2 mt- w-28">
+          <img src='/assets/eyes.jpeg' alt="">
+          <i class="fa-solid fa-bullseye text-green-600" *ngFor="let i of [1,2,3,4,5]"></i>
+        </div>
+      </div>
+    </div>
+
+    <button class="text-white block hidden bg-[rgb(22,101,52)] p-3 w-14 rounded-full focus:outline-none md:block lg:hidden" (click)="toggleMenu()">
+      <i [ngClass]="menuOpen ? 'fas fa-times' : 'fas fa-bars'" class="text-2xl"></i>
+    </button>
+
+    <div class="ml-4 md:hidden">
+      <div class="flex items-center space-x-2 md:hidden">
+        <i class="fa-solid fa-phone rotate-45 text-xs text-[rgb(22,101,52)]"></i>
+        <p class="text-[rgb(22,101,52)] font-bold text-xs sm:text-sm mt-1 hover:text-indigo-950">+92 302 6062955</p>
+      </div>
+      <div class="flex items-center space-x-2">
+        <i class="fa-brands fa-whatsapp text-green-700 text-lg"></i>
+        <p class="text-[rgb(22,101,52)] font-bold text-sm sm:text-sm hover:text-indigo-950">+92 3019307229</p>
+      </div>
+    </div>
+
+    <nav [ngClass]="{ 'hidden': !menuOpen, 'block': menuOpen }" class="w-full  relative lg:flex lg:items-center lg:w-auto mt-9 lg:mt-0 transition-all duration-300 ease-in-out md:bg-[rgb(22,101,52)] lg:bg-white md:border md:border-white">
+      <ul class="font-medium text-start md:mx-5 lg:mx-0 flex flex-col space-y-3 lg:space-y-0 lg:flex-row lg:space-x-0 md:text-white lg:text-[rgb(18,121,6)] lg:mt-0 md:mt-9 ">
+        <li *ngFor="let link of menuLinks" class="p-2 group rounded md:hover:bg-white md:border md:border-white lg:border-none lg:hover:bg-transparent">
+          <ng-container *ngIf="link.name !== 'Log Out'; else logoutLink">
+            <a class="font-medium text-sm cursor-pointer py-1 rounded block md:group-hover:text-[rgb(25,188,7)] lg:hover:text-indigo-950" [routerLink]="link.href" (click)="menuOpen = false">
+              {{ link.name }}
+            </a>
+          </ng-container>
+          <ng-template #logoutLink>
+            <button class="font-medium text-sm cursor-pointer py-1 rounded block md:group-hover:text-[rgb(22,101,52)] lg:hover:text-indigo-950 w-full text-left" (click)="logout(); menuOpen = false">
+              {{ link.name }}
+            </button>
+          </ng-template>
+        </li>
+  <li class="p-2 group rounded md:hover:bg-white md:border md:border-white lg:border-none">
+  <a
+    [routerLink]="['/producttable']"
+    (click)="menuOpen = false"
+    class="font-medium text-sm px-3 py-2 rounded-full block 
+           md:group-hover:text-white md:text-white 
+           lg:bg-[rgb(23,168,7)]  lg:text-white"
+  >
+    <i class="fas fa-shopping-cart"></i>
+  </a>
+</li>
+
+
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="bg-[#004030] fixed md:top-[89px] top-20 w-full z-40">
+  <div class="container mx-auto px-6">
+    <div class="hidden md:flex justify-center items-center space-x-0 lg:space-x-2">
+      <div *ngFor="let link of links" class="hover:bg-white p-2 group">
+        <a class="text-white group-hover:text-[rgb(18,121,6)] font-medium text-sm px-2 py-1 rounded" [href]="link.path">
+          {{ link.label }}
+        </a>
+      </div>
+    </div>
+
+    <div class="md:hidden">
+      <div class="flex justify-between items-center">
+        <div class="flex space-x-2">
+          <div *ngFor="let link of links.slice(0, 3)" class="hover:bg-white p-2 group">
+            <a class="text-white group-hover:text-[rgb(22,101,52)] font-medium text-sm px-2 py-1 rounded" [href]="link.path" (click)="closeMenu()">
+              {{ link.label }}
+            </a>
+          </div>
+        </div>
+        <button class="text-white focus:outline-none" (click)="toggleMenu2()" aria-label="Toggle menu">
+          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
+
+      <div *ngIf="isMenuOpen" class="mt-2 space-y-1 border-2 border-white">
+        <div *ngFor="let link of links.slice(3)" class="hover:bg-white p-2 group">
+          <a class="text-white border-2 border-white group-hover:text-[rgb(22,101,52)] font-medium text-sm px-2 py-1 rounded block" [href]="link.path" (click)="closeMenu()">
+            {{ link.label }}
+          </a>
+        </div>
+        <div *ngFor="let item of menuItems" class="hover:bg-white p-2 group">
+          <ng-container *ngIf="item.label !== 'Log Out'; else logoutButton">
+            <a class="text-white border border-white group-hover:text-[rgb(22,101,52)] font-medium text-sm px-2 cursor-pointer py-1 rounded block" [routerLink]="item.href" (click)="item.action()">
+              {{ item.label }}
+            </a>
+          </ng-container>
+          <ng-template #logoutButton>
+            <button class="text-white border border-white group-hover:text-[rgb(22,101,52)]font-medium text-sm px-2 cursor-pointer py-1 rounded block w-full text-left" (click)="item.action()">
+              {{ item.label }}
+            </button>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
+
+<aside class="w-10 border- z-50 fixed right-0 top-[72%] transform -translate-y-1/2 space-y-2">
+  <a *ngFor="let link of socialLinks; let i = index" [href]="link.href" [ngClass]="[link.bgColor, 'block text-white p-2 rounded-sm text-center items-center', i === 0 || i === socialLinks.length - 1 ? 'rounded-tl-[17px]' : '']">
+    <i [class]="link.iconClass" class="text-xl"></i>
+  </a>
+</aside>

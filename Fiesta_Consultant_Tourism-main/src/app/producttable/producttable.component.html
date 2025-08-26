@@ -1,0 +1,321 @@
+<div class="mt-32">
+  <img src='/assets/nature2.jpg' width="100%" class="object-fit" alt="Leading Tour Operator &amp; Destination Management Company">         
+</div>
+
+<!-- Cart Table -->
+<div class="lg:flex md:items-center md:space-x-3 justify-center">
+  <div class="grid place-content-center items-center mt-10 overflow-x-auto">
+    <!-- Table Container -->
+    <div class="min-w-[80vw] overflow-x-auto rounded-lg bg-white shadow-lg" *ngIf="cartItems.length > 0 || formData">
+      <table class="w-full">
+        <thead class="bg-[#004030] text-white">
+          <tr>
+            <th class="px-6 py-4 text-left font-semibold">ID</th>
+            <th class="px-6 py-4 text-left font-semibold">Image</th>
+            <th class="px-6 py-4 text-left font-semibold">Title</th>
+            <th class="px-6 py-4 text-left font-semibold">Adults</th>
+            <th class="px-6 py-4 text-left font-semibold">Children</th>
+            <th class="px-6 py-4 text-left font-semibold">Transfer</th>
+            <th class="px-6 py-4 text-left font-semibold">Total</th>
+            <th class="px-6 py-4 text-left font-semibold">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Display cart items -->
+          <tr *ngFor="let item of cartItems; let i = index" class="border-t border-gray-200 hover:bg-gray-50 transition-colors">
+            <td class="px-6 py-4 border-2 border-slate-200">{{ i + 1 }}</td>
+            <td class="px-4 py-4 border-2 border-slate-200">
+              <div *ngIf="item.thumbnail" class="w-20 h-20 flex items-center justify-center">
+              <img [src]="'http://localhost:4000/uploads/' + item.thumbnail[0]" 
+           alt="{{ item.thumbnail }}"
+                     class="max-w-full max-h-full object-contain">
+              </div>
+            </td>
+            <td class="px-6 py-4 text-indigo-600 border-2 border-slate-200 max-w-[300px] truncate">
+              <a [routerLink]="['/products', item.productId]">
+                {{ item.producttitle }}
+              </a>
+            </td>
+            <td class="px-6 py-4 text-center border-2 border-slate-200">
+              {{ item.transfertype === 'Private' ? item.privateAdult : item.adults_no }}
+            </td>
+            <td class="px-6 py-4 text-center border-2 border-slate-200">
+              {{ item.transfertype === 'Private' ? item.privateChild : item.kids_no }}
+            </td>
+            <td class="px-6 py-4 text-center border-2 border-slate-200">
+              {{ item.transfertype }}
+            </td>
+            <td class="px-6 py-4 text-center border-2 border-slate-200">
+              <span class="text-xs">Pkr:</span>
+             <span>
+               {{ item.total || item.privatetransferprice  }}
+             </span>
+            </td>
+            <!-- trash button -->
+<td class="px-6 py-4 text-center border-2 border-slate-200">
+  <button (click)="confirmDelete(item)" class="text-red-600 hover:text-red-800 transition-colors">
+    <i class="fa-solid fa-trash-can"></i>
+  </button>
+</td>
+
+<!-- Delete Confirmation Modal -->
+<div
+  *ngIf="showModal"
+  class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+>
+  <div class="bg-white rounded shadow-lg w-[320px]">
+    <div class="bg-[#004030]  text-white px-4 py-2 flex justify-between items-center">
+      <span class="font-bold">Delete Confirmation</span>
+      <button (click)="closeModal()" class="text-white hover:text-gray-200">
+        ✕
+      </button>
+    </div>
+    <div class="px-4 py-6 text-center text-gray-800 font-semibold">
+      Are You Sure You Want Delete ?
+    </div>
+    <div class="flex justify-center gap-4 pb-4">
+      <button
+        (click)="deleteConfirmed()"
+        class="bg-[#004030] hover:bg-[#3E5F44] text-white px-4 py-2 rounded shadow"
+      >
+        Yes Delete
+      </button>
+      <button
+        (click)="closeModal()"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+
+          </tr>
+          
+          <!-- Display form data if no cart items -->
+          <tr *ngIf="cartItems.length === 0 && formData" class="border-t border-gray-200 hover:bg-gray-50 transition-colors">
+            <td class="px-6 py-4 border-2 border-slate-200">1</td>
+            <td class="px-4 py-4 border-2 border-slate-200">
+              <div *ngIf="productData?.thumbnail?.length > 0" class="w-20">
+                <img [src]="'http://localhost:4000/uploads/' + productData.thumbnail[1]">
+              </div>
+            </td>
+            <td class="px-6 py-4 text-indigo-600 border-2 border-slate-200 max-w-[300px] truncate">
+              <a [routerLink]="['/products', productData?._id]">
+                {{ productData.producttitle }}
+              </a>
+            </td>
+            <td class="px-6 py-4 text-center border-2 border-slate-200">
+              {{ formData?.Transfer === 'Private' ? formData?.privateAdult : formData?.NoofAdult }}
+            </td>
+            <td class="px-6 py-4 text-center border-2 border-slate-200">
+              {{ formData?.Transfer === 'Private' ? formData?.privateChild : formData?.NoofChild }}
+            </td>
+            <td class="px-6 py-4 text-center border-2 border-slate-200">
+              {{ formData?.Transfer }}
+            </td>
+            <td class="px-6 py-4 text-center border-2 border-slate-200">
+             AED:{{ formData?.Total }}
+            </td>
+         <tr *ngFor="let item of cartItems; let i = index" class="border-t border-gray-200 hover:bg-gray-50 transition-colors">
+  <!-- other table cells -->
+  <!-- <td class="px-6 py-4 text-center border-2 border-slate-200">
+    <button (click)="removeFromCart(item)" class="text-red-600 hover:text-red-800 transition-colors">
+      <i class="fa-solid fa-trash-can"></i>
+    </button>
+  </td> -->
+</tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Empty Cart Message -->
+    <div *ngIf="!cartItems.length && !formData" class="text-center p-8">
+      <p class="text-xl">Your cart is empty</p>
+      <button (click)="navigateToPage()" class="mt-4 bg-[#004030] text-white px-4 py-2 rounded ">
+        Continue Shopping
+      </button>
+    </div>
+  
+    <!-- Continue Shopping Button -->
+    <div class="flex justify-center mt-5" *ngIf="cartItems.length > 0 || formData">
+      <button
+        type="button"
+        (click)="navigateToPage()"
+        class="focus:outline-none text-white bg-[#004030] hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 transition-colors"
+      >
+        Continue Shopping
+      </button>
+    </div>
+  </div>
+  
+  <div class="flex justify-center mt-5 shadow-xl">
+    <div class="border-2  w-48 h-48 flex items-center justify-center">
+      <div class="text-center">
+        <h1 class="text-xl font-normal">Need Help?</h1>
+        <h1 class="text-xl font-bold text-[#004030]">+971 54 540 4171</h1>
+        <h1 class="text-base font-light">Available 24/7</h1>
+      </div>
+    </div>
+  </div>       
+</div>             
+
+<!-- Payment Form -->
+<div class="grid place-content-center">
+  <div class="mt-7 w-[100%] flex flex-col bg-white rounded-lg p-4 shadow-sm">
+    <h2 class="text-[#004030] font-bold text-2xl text-center md:text-start mx-6">Personal Information</h2>
+
+    <!-- Form Group -->
+    <form [formGroup]="personalDetailsForm" (ngSubmit)="onSubmit()">
+      <!-- Row 1: First Name, Last Name, Address -->
+      <div class="mt-4 mx-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div>
+          <label class="text-[#060840] text-xl" for="first_name">First Name</label>
+          <input formControlName="firstName" placeholder="First Name" class="w-full bg-white rounded-md border-gray-300 border text-gray-800 px-2 py-1 focus:ring-[#060840] focus:border-[#060840]" id="first_name" type="text">
+        </div>
+        <div>
+          <label class="text-[#060840] text-xl" for="last_name">Last Name</label>
+          <input formControlName="lastName" placeholder="Last Name" class="w-full bg-white rounded-md border-gray-300 border text-gray-800 px-2 py-1 focus:ring-[#060840] focus:border-[#060840]" id="last_name" type="text">
+        </div>
+        <div>
+          <label class="text-[#060840] text-xl" for="address">Address</label>
+          <input formControlName="address" placeholder="Your address" class="w-full bg-white rounded-md border-gray-300 border text-gray-800 px-2 py-1 focus:ring-[#060840] focus:border-[#060840]" id="address" type="text">
+        </div>
+      </div>
+
+      <!-- Row 2: Payment Method, City, State -->
+      <div class="mt-4 mx-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div>
+          <label class="text-[#060840] text-xl" for="payment">Payment Method</label>
+          <select formControlName="paymentMethod" class="w-full bg-white rounded-md border-gray-300 border text-gray-700 px-2 py-1">
+            <option value="">Select a payment method</option>
+            <option *ngFor="let method of paymentMethods" [value]="method">{{ method }}</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-[#060840] text-xl" for="city">City</label>
+          <input formControlName="city" placeholder="Your city" class="w-full bg-white rounded-md border-gray-300 border text-gray-800 px-2 py-1 focus:ring-[#060840] focus:border-[#060840]" id="city" type="text">
+        </div>
+        <div>
+          <label class="text-[#060840] text-xl" for="state">State</label>
+          <input formControlName="state" placeholder="Your state" class="w-full bg-white rounded-md border-gray-300 border text-gray-800 px-2 py-1 focus:ring-[#060840] focus:border-[#060840]" id="state" type="text">
+        </div>
+      </div>
+
+      <!-- Row 3: Name on Card, Card Number, ZIP -->
+      <div class="mt-4 mx-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div>
+          <label class="text-[#060840] text-xl" for="name_on_card">Name on card</label>
+          <input formControlName="nameOnCard" placeholder="Jon Smith" class="w-full bg-white rounded-md border-gray-300 border text-gray-800 px-2 py-1 focus:ring-[#060840] focus:border-[#060840]" id="name_on_card" type="text">
+        </div>
+        <div>
+          <label class="text-[#060840] text-xl" for="card_number">Card number</label>
+          <input formControlName="cardNumber" placeholder="1234 1234 1234" class="w-full bg-white rounded-md border-gray-300 border text-gray-700 px-2 py-1 focus:ring-[#060840] focus:border-[#060840]" id="card_number" type="text">
+          <div *ngIf="personalDetailsForm.get('cardNumber')?.invalid && personalDetailsForm.get('cardNumber')?.touched" class="text-red-500 text-sm">
+            Please enter a valid card number (e.g., 1234 1234 1234).
+          </div>
+        </div>
+        
+        <div>
+          <label class="text-[#060840] text-xl" for="zip">ZIP</label>
+          <input formControlName="zip" placeholder="Your ZIP code" class="w-full bg-white rounded-md border-gray-300 border text-gray-700 px-2 py-1" id="zip" type="text">
+        </div>
+      </div>
+
+      <!-- Row 4: Country, Expiry, CVV -->
+      <div class="mt-4 mx-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div>
+          <label class="text-[#060840] text-xl" for="country">Country</label>
+          <select formControlName="country" class="w-full bg-white rounded-md border-gray-300 border text-gray-700 px-2 py-1">
+            <option value="">Select a country</option>
+            <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-[#060840] text-xl" for="expiry">Expiry</label>
+          <input formControlName="expiry" placeholder="MM / YY" class="w-full bg-white rounded-md border-gray-300 border text-gray-800 px-2 py-1 focus:ring-[#060840] focus:border-[#060840]" id="expiry" type="text">
+          <div *ngIf="personalDetailsForm.get('expiry')?.invalid && personalDetailsForm.get('expiry')?.touched" class="text-red-500 text-sm">
+            Please enter a valid expiry date (e.g., 12/25).
+          </div>
+        </div>
+        <div>
+          <label class="text-[#060840] text-xl" for="cvv">CVV</label>
+          <input formControlName="cvv" placeholder="•••" class="w-full bg-white rounded-md border-gray-300 border text-gray-800 px-2 py-1 focus:ring-[#060840] focus:border-[#060840]" id="cvv" type="password">
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="mt-4 flex justify-center">
+        <button type="submit"  class="w-[95%] bg-[#004030] text-white rounded-md px-8 py-2 hover:bg-[#004030] hover:text-white transition-all duration-200">
+          Complete Booking
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div
+  class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+  *ngIf="successful"
+>
+  <div class="bg-white rounded shadow-lg w-[320px]">
+    <div class="bg-[#004030] text-white px-4 py-2 flex justify-between items-center">
+      <span class="font-bold">Booking Successful</span>
+      <button class="text-white hover:text-gray-200">
+        ✕
+      </button>
+    </div>
+    <div class="px-4 py-6 text-center text-gray-800 font-semibold">
+      Your booking has been successfully completed!
+    </div>
+    <div class="flex justify-center pb-4">
+     <button
+  class="bg-[#004030]  hover:bg-[#004030]  text-white px-4 py-2 rounded shadow"
+  [routerLink]="'/main'"
+>
+  OK
+</button>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
